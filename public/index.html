@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Library — Sign in</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ============ LOGIN ============ -->
+  <div class="login-scene" id="loginScene">
+    <div class="login-card">
+      <div class="login-mark" aria-hidden="true">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15Z" stroke="url(#g)" stroke-width="1.6"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M8.5 6.5h7M8.5 9.5h4.5" stroke="url(#g)" stroke-width="1.6" stroke-linecap="round"/><defs><linearGradient id="g" x1="4" y1="2" x2="20" y2="22"><stop stop-color="#0071e3"/><stop offset="1" stop-color="#6f5bf5"/></linearGradient></defs></svg>
+      </div>
+      <h1 class="login-title">Library<span class="accent">.</span></h1>
+      <p class="login-sub">Sign in to browse, borrow and manage.</p>
+
+      <form id="loginForm" autocomplete="on">
+        <label class="field">
+          <span>Email</span>
+          <input type="email" id="email" placeholder="you@library.com" required>
+        </label>
+        <label class="field">
+          <span>Password</span>
+          <input type="password" id="password" placeholder="••••••••" required>
+        </label>
+        <div class="login-error" id="loginError" hidden></div>
+        <button class="btn btn-primary btn-block" type="submit" id="loginBtn">Sign In</button>
+      </form>
+
+      <div class="demo-box">
+        <p>Demo accounts</p>
+        <button type="button" class="demo-row" data-email="admin@library.com" data-pass="admin123">
+          <b>Admin</b><span>admin@library.com</span>
+        </button>
+        <button type="button" class="demo-row" data-email="aarav@library.com" data-pass="user123">
+          <b>Member</b><span>aarav@library.com</span>
+        </button>
+      </div>
+    </div>
+    <p class="login-foot">Library Management System · Node.js · Express · SQLite</p>
+  </div>
+
+  <!-- ============ APP SHELL ============ -->
+  <div id="app" hidden>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15Z" stroke="url(#g2)" stroke-width="1.6"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M8.5 6.5h7M8.5 9.5h4.5" stroke="url(#g2)" stroke-width="1.6" stroke-linecap="round"/><defs><linearGradient id="g2" x1="4" y1="2" x2="20" y2="22"><stop stop-color="#0071e3"/><stop offset="1" stop-color="#6f5bf5"/></linearGradient></defs></svg>
+          <span>Library<span class="accent">.</span></span>
+        </div>
+
+        <nav class="tabs" id="tabs"></nav>
+
+        <div class="user-chip" id="userChip">
+          <span class="avatar" id="avatar"></span>
+          <span class="user-name" id="userName"></span>
+          <button class="btn btn-plain btn-sm" id="logoutBtn">Sign out</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="main" id="main"></main>
+  </div>
+
+  <!-- modal + toast roots -->
+  <div class="sheet-wrap" id="sheetWrap" hidden>
+    <div class="sheet-backdrop" id="sheetBackdrop"></div>
+    <div class="sheet" id="sheet" role="dialog" aria-modal="true"></div>
+  </div>
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
