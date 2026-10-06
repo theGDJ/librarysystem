@@ -1,0 +1,485 @@
+@import "tailwindcss";
+
+/* =========================================================================
+ * PRAMAAN design system
+ * -------------------------------------------------------------------------
+ * Concept: "the register". Pramaan behaves like a reference publication —
+ * ivory paper, navy ink, teal for the reader's current selection, amber only
+ * where the law makes something compulsory. Structure is carried by rules,
+ * margins and type, not by shadows, gradients or glass.
+ *
+ * Evidence tiers (used identically everywhere):
+ *   record  — rendered straight from a catalogue row          (navy rule)
+ *   extract — quoted from a knowledge-base article            (teal rule)
+ *   model   — prose composed by the on-server language model  (dashed rule)
+ * ========================================================================= */
+
+:root {
+  --font-heading: "Manrope Variable", "Manrope", "Noto Sans Devanagari Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter Variable", "Inter", "Noto Sans Devanagari Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-id: "JetBrains Mono Variable", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --header-h: 64px;
+}
+
+@theme {
+  /* ---- base palette (from the brief) ---- */
+  --color-ivory: #faf9f6;
+  --color-navy: #102a4c;
+  --color-teal: #2d7778;
+  --color-slate: #5d6d80;
+  --color-warm: #e5e1d8;
+  --color-amber: #c38a28;
+  --color-success: #27845b;
+
+  /* ---- semantic surfaces ---- */
+  --color-canvas: #faf9f6;
+  --color-surface: #ffffff;
+  --color-sunken: #f3f1ec;
+  --color-rule: #e5e1d8;
+  --color-rule-strong: #cfc9bc;
+
+  /* ---- semantic text ---- */
+  --color-ink: #102a4c;          /* headings, identifiers, primary actions */
+  --color-body: #26364d;         /* running text — navy, slightly softened */
+  --color-muted: #5d6d80;        /* metadata, secondary text (4.9:1 on ivory) */
+
+  /* ---- interaction ---- */
+  --color-action: #102a4c;
+  --color-action-hover: #0a1d36;
+  --color-select: #2d7778;
+  --color-select-soft: #e7f0ef;
+  --color-select-ink: #1f5859;
+
+  /* ---- feedback ---- */
+  --color-attention: #c38a28;     /* compulsory / QCO — markers and rules */
+  --color-attention-soft: #f7eedd;
+  --color-attention-ink: #7f5714; /* amber text that passes contrast */
+  --color-ok: #27845b;
+  --color-ok-soft: #e5f1ea;
+  --color-ok-ink: #1e6a49;
+  --color-danger: #a4402c;
+  --color-danger-soft: #f6e7e2;
+
+  /* ---- type ---- */
+  --font-heading: "Manrope Variable", "Manrope", "Noto Sans Devanagari Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter Variable", "Inter", "Noto Sans Devanagari Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+
+  /* type scale — 15px body, ~1.25 steps */
+  --text-2xs: 0.75rem;     /* 12 */
+  --text-2xs--line-height: 1.1rem;
+  --text-xs: 0.8125rem;    /* 13 */
+  --text-xs--line-height: 1.25rem;
+  --text-sm: 0.875rem;     /* 14 */
+  --text-sm--line-height: 1.35rem;
+  --text-base: 0.9375rem;  /* 15 */
+  --text-base--line-height: 1.6rem;
+  --text-md: 1.0625rem;    /* 17 */
+  --text-md--line-height: 1.7rem;
+  --text-lg: 1.25rem;      /* 20 */
+  --text-lg--line-height: 1.75rem;
+  --text-xl: 1.5625rem;    /* 25 */
+  --text-xl--line-height: 2rem;
+  --text-2xl: 2rem;        /* 32 */
+  --text-2xl--line-height: 2.4rem;
+  --text-3xl: 2.75rem;     /* 44 */
+  --text-3xl--line-height: 3.05rem;
+  --text-4xl: 3.5rem;      /* 56 */
+  --text-4xl--line-height: 3.75rem;
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+}
+
+/* ------------------------------------------------------------------ base */
+@layer base {
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 16px);
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-body);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  font-feature-settings: "cv11", "ss01";
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  color: var(--color-ink);
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+::selection {
+  background: var(--color-select-soft);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-select);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+input,
+textarea,
+select,
+button {
+  font: inherit;
+  color: inherit;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+}
+
+/* ------------------------------------------------------------ components */
+
+@layer components {
+  /* identifiers: IS codes, clause numbers, licence numbers */
+  .id {
+    font-family: var(--font-id);
+    font-variant-ligatures: none;
+    font-size: 0.92em;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+    font-weight: 500;
+  }
+
+  /* small descriptive label — sentence case, never all caps */
+  .label {
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    line-height: 1.2rem;
+    font-weight: 500;
+    color: var(--color-muted);
+  }
+
+  .skip-link {
+    position: absolute;
+    left: 12px;
+    top: -60px;
+    z-index: 100;
+    background: var(--color-navy);
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+  }
+  .skip-link:focus {
+    top: 12px;
+  }
+
+  /* ---- buttons ---- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      color 0.15s ease;
+    cursor: pointer;
+  }
+  .btn:disabled,
+  .btn[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.45;
+  }
+  .btn-sm {
+    height: 32px;
+    padding: 0 12px;
+    font-size: var(--text-xs);
+  }
+  .btn-lg {
+    height: 48px;
+    padding: 0 22px;
+    font-size: var(--text-base);
+  }
+  .btn-primary {
+    background: var(--color-action);
+    color: #fff;
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--color-action-hover);
+  }
+  .btn-secondary {
+    background: var(--color-surface);
+    color: var(--color-ink);
+    border-color: var(--color-rule-strong);
+  }
+  .btn-secondary:hover:not(:disabled) {
+    border-color: var(--color-navy);
+  }
+  .btn-quiet {
+    background: transparent;
+    color: var(--color-ink);
+    padding: 0 10px;
+  }
+  .btn-quiet:hover:not(:disabled) {
+    background: var(--color-sunken);
+  }
+
+  /* text link with a persistent underline — links look like links */
+  .link {
+    color: var(--color-ink);
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-color: var(--color-rule-strong);
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    transition: text-decoration-color 0.15s ease;
+  }
+  .link:hover {
+    text-decoration-color: var(--color-select);
+  }
+
+  /* ---- form fields ---- */
+  .field {
+    width: 100%;
+    background: var(--color-surface);
+    border: 1px solid var(--color-rule-strong);
+    border-radius: var(--radius-md);
+    padding: 9px 12px;
+    font-size: var(--text-base);
+    color: var(--color-ink);
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .field::placeholder {
+    color: #8592a3;
+  }
+  .field:hover {
+    border-color: var(--color-slate);
+  }
+  .field:focus {
+    outline: none;
+    border-color: var(--color-select);
+    box-shadow: 0 0 0 3px var(--color-select-soft);
+  }
+  .field[aria-invalid="true"] {
+    border-color: var(--color-danger);
+  }
+  .field[aria-invalid="true"]:focus {
+    box-shadow: 0 0 0 3px var(--color-danger-soft);
+  }
+  select.field {
+    appearance: none;
+    padding-right: 34px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235d6d80' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+  }
+
+  /* ---- tags: square, quiet, informational ---- */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    height: 22px;
+    padding: 0 7px;
+    border-radius: var(--radius-xs);
+    font-size: var(--text-2xs);
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    background: var(--color-sunken);
+    color: var(--color-muted);
+  }
+  .tag-qco {
+    background: var(--color-attention-soft);
+    color: var(--color-attention-ink);
+  }
+  .tag-ok {
+    background: var(--color-ok-soft);
+    color: var(--color-ok-ink);
+  }
+  .tag-danger {
+    background: var(--color-danger-soft);
+    color: var(--color-danger);
+  }
+  .tag-select {
+    background: var(--color-select-soft);
+    color: var(--color-select-ink);
+  }
+
+  /* ---- segmented choice (radio-like buttons) ---- */
+  .choice {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 34px;
+    padding: 6px 12px;
+    border: 1px solid var(--color-rule-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-body);
+    text-align: left;
+    transition:
+      border-color 0.15s ease,
+      background-color 0.15s ease;
+  }
+  .choice:hover {
+    border-color: var(--color-slate);
+  }
+  .choice[aria-pressed="true"],
+  .choice[aria-checked="true"],
+  .choice[aria-selected="true"] {
+    border-color: var(--color-select);
+    background: var(--color-select-soft);
+    color: var(--color-select-ink);
+  }
+
+  /* ---- evidence tiers ---- */
+  .ev {
+    position: relative;
+    padding-left: 16px;
+  }
+  .ev::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 2px;
+    bottom: 2px;
+    width: 2px;
+    border-radius: 1px;
+  }
+  .ev-record::before {
+    background: var(--color-navy);
+  }
+  .ev-extract::before {
+    background: var(--color-teal);
+  }
+  .ev-model::before {
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--color-slate) 0 4px,
+      transparent 4px 8px
+    );
+  }
+
+  /* ---- surfaces ---- */
+  .sheet {
+    background: var(--color-surface);
+    border: 1px solid var(--color-rule);
+    border-radius: var(--radius-lg);
+  }
+  .well {
+    background: var(--color-sunken);
+    border-radius: var(--radius-md);
+  }
+
+  /* ---- long-form reading (assistant answers, scheme text) ---- */
+  .reading {
+    font-size: var(--text-md);
+    line-height: 1.72;
+    color: var(--color-body);
+  }
+  .reading p + p {
+    margin-top: 0.85em;
+  }
+  .reading strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+
+  /* skeleton block for loading states — static, no shimmer */
+  .skeleton {
+    background: var(--color-sunken);
+    border-radius: var(--radius-sm);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .skeleton {
+      animation: pulse-soft 1.6s ease-in-out infinite;
+    }
+  }
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+/* typing indicator — three dots, used only while an answer is composed */
+@keyframes dot {
+  0%,
+  80%,
+  100% {
+    opacity: 0.25;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+.dots span {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-right: 3px;
+  border-radius: 50%;
+  background: var(--color-slate);
+  animation: dot 1.2s infinite ease-in-out;
+}
+.dots span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.dots span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+/* -------------------------------------------------------------- print */
+@media print {
+  header[data-site-header],
+  footer[data-site-footer],
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+  }
+}
